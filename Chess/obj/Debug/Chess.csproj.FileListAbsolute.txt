@@ -1,0 +1,9 @@
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\obj\Debug\Chess.csprojResolveAssemblyReference.cache
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\obj\Debug\Chess.csproj.CoreCompileInputs.cache
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\bin\Debug\Chess.exe.config
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\bin\Debug\Chess.exe
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\bin\Debug\Chess.pdb
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\obj\Debug\Chess.exe
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\obj\Debug\Chess.pdb
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\obj\Debug\Chess.MyForm.resources
+C:\Users\Mattias\Desktop\C#\Project\Chess\Chess\Chess\obj\Debug\Chess.csproj.GenerateResource.Cache
