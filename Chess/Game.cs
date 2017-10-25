@@ -26,16 +26,16 @@ namespace Chess
             ChessPiece.CreateSet();
             foreach (ChessPiece piece in ChessPiece.Set)
             {
-                Place(piece, piece.Address);
+                Movement.Place(piece, piece.Address);
             }
         }
 
-        private void Place(ChessPiece piece, string address)
-        {
-            Board.Square[address].Piece = piece;
-            Board.Square[address].Panel.Controls.Add(piece.Graphic);
-            piece.Address = address;
-        }
+        //private void Place(ChessPiece piece, string address)
+        //{
+        //    Board.Square[address].Piece = piece;
+        //    Board.Square[address].Panel.Controls.Add(piece.Graphic);
+        //    piece.Address = address;
+        //}
 
     }
 }

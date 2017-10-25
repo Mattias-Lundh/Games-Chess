@@ -34,54 +34,54 @@ namespace Chess
                 {
                     if (Type == Piece.Rook)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\RookBlack.png";
+                        return @"Graphics\RookBlack.png";
                     }
                     if (Type == Piece.Knight)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\KnightBlack.png";
+                        return @"Graphics\KnightBlack.png";
                     }
                     if (Type == Piece.Bishop)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\BishopBlack.png";
+                        return @"Graphics\BishopBlack.png";
                     }
                     if (Type == Piece.Queen)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\QueenBlack.png";
+                        return @"Graphics\QueenBlack.png";
                     }
                     if (Type == Piece.King)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\KingBlack.png";
+                        return @"Graphics\KingBlack.png";
                     }
                     if (Type == Piece.Pawn)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\PawnBlack.png";
+                        return @"Graphics\PawnBlack.png";
                     }
                 }
                 else
                 {
                     if (Type == Piece.Rook)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\RookWhite.png";
+                        return @"Graphics\RookWhite.png";
                     }
                     if (Type == Piece.Knight)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\KnightWhite.png";
+                        return @"Graphics\KnightWhite.png";
                     }
                     if (Type == Piece.Bishop)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\BishopWhite.png";
+                        return @"Graphics\BishopWhite.png";
                     }
                     if (Type == Piece.Queen)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\QueenWhite.png";
+                        return @"Graphics\QueenWhite.png";
                     }
                     if (Type == Piece.King)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\KingWhite.png";
+                        return @"Graphics\KingWhite.png";
                     }
                     if (Type == Piece.Pawn)
                     {
-                        return @"C:\Users\Mattias\Desktop\C#\Project\Chess\Images\Chess pieces\PawnWhite.png";
+                        return @"Graphics\PawnWhite.png";
                     }
                 }
                 return "somthing went wrong";

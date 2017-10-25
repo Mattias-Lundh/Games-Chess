@@ -50,7 +50,7 @@ namespace Chess
                         Dock = DockStyle.Fill,
                         Margin = new Padding(0, 0, 0, 0)
                     };
-                    LayoutPanel.Controls.Add(square);    
+                    LayoutPanel.Controls.Add(square);
                     if (!((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0)))
                     {
                         square.BackColor = Color.Black;
@@ -59,10 +59,21 @@ namespace Chess
                                 new BoardSquare
                                 {
                                     Panel = square,
-                                    Address = Address.FlipRows(Address.ConvertFromInt(j) + i)
+                                    Address = Address.FlipRows(Address.ConvertFromInt(j) + i),
+                                    FillColor = square.BackColor
                                 });
                 }
             }
+
+            //foreach (KeyValuePair<string, BoardSquare> key in Square)
+            //{
+            //    BoardSquare square = Square[key.ToString().Substring(1, 2)];
+            //    square.Piece.Graphic.MouseDown += Events.PieceMouseDownEvent;
+            //    square.Piece.Graphic.Click += Events.PieceClickEvent;
+            //    square.Panel.MouseUp += Events.SquareMouseUpEvent;
+            //}
+
+
         }
     }
 }

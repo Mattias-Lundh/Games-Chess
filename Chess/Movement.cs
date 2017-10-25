@@ -960,5 +960,11 @@ namespace Chess
             }
             return result;
         }
+        public static void Place(ChessPiece piece, string address)
+        {
+            Board.Square[address].Piece = piece;
+            Board.Square[address].Panel.Controls.Add(piece.Graphic);
+            piece.Address = address;
+        }
     }
 }
