@@ -65,7 +65,7 @@ namespace Chess
                     {
                         result.Add(address);
                     }
-                       
+
                 }
                 else if (piece.Player != Board.Square[piece.Address].Piece.Player && !diagonalBlocked)
                 {
@@ -313,7 +313,7 @@ namespace Chess
             List<string> result = new List<string> { };
             foreach (string address in Horse(piece.Address))
             {
-                if (Board.Square[address].Piece != null && Board.Square[address].Piece.Player != piece.Player)
+                if (Board.Square[address].Piece == null || Board.Square[address].Piece.Player != piece.Player)
                 {
                     if (!KingThreatened(piece, address))
                     {
@@ -333,7 +333,11 @@ namespace Chess
             {
                 if (Address.SquareExcisits(piece.Address, -1, 1))
                 {
-                    result.Add(testLocation);
+                    if (Board.Square[testLocation].Piece != null &&
+                        Board.Square[testLocation].Piece.Player != piece.Player)
+                    {
+                        result.Add(testLocation);
+                    }
                 }
                 testLocation = Address.ModifyAddress(piece.Address, 0, 1);
                 if (Address.SquareExcisits(piece.Address, 0, 1) && Board.Square[Address.ModifyAddress(piece.Address, 0, 1)].Piece == null)
@@ -343,9 +347,13 @@ namespace Chess
                 testLocation = Address.ModifyAddress(piece.Address, 1, 1);
                 if (Address.SquareExcisits(piece.Address, 1, 1))
                 {
-                    result.Add(testLocation);
+                    if (Board.Square[testLocation].Piece != null &&
+                        Board.Square[testLocation].Piece.Player != piece.Player)
+                    {
+                        result.Add(testLocation);
+                    }
                 }
-                if (piece.Address[1] == 2 && Board.Square[Address.ModifyAddress(piece.Address, 0, 1)].Piece == null)
+                if (int.Parse(piece.Address[1].ToString()) == 2 && Board.Square[Address.ModifyAddress(piece.Address, 0, 1)].Piece == null)
                 {
                     result.Add(Address.ModifyAddress(piece.Address, 0, 2));
                 }
@@ -355,7 +363,11 @@ namespace Chess
                 testLocation = Address.ModifyAddress(piece.Address, -1, -1);
                 if (Address.SquareExcisits(piece.Address, -1, -1))
                 {
-                    result.Add(testLocation);
+                    if (Board.Square[testLocation].Piece != null &&
+                        Board.Square[testLocation].Piece.Player != piece.Player)
+                    {
+                        result.Add(testLocation);
+                    }
                 }
                 testLocation = Address.ModifyAddress(piece.Address, 0, -1);
                 if (Address.SquareExcisits(piece.Address, 0, -1) && Board.Square[Address.ModifyAddress(piece.Address, 0, -1)].Piece == null)
@@ -365,9 +377,13 @@ namespace Chess
                 testLocation = Address.ModifyAddress(piece.Address, 1, -1);
                 if (Address.SquareExcisits(piece.Address, 1, -1))
                 {
-                    result.Add(testLocation);
+                    if (Board.Square[testLocation].Piece != null &&
+                Board.Square[testLocation].Piece.Player != piece.Player)
+                    {
+                        result.Add(testLocation);
+                    }
                 }
-                if (piece.Address[1] == 7 && Board.Square[Address.ModifyAddress(piece.Address, 0, -1)].Piece == null)
+                if (int.Parse(piece.Address[1].ToString()) == 7 && Board.Square[Address.ModifyAddress(piece.Address, 0, -1)].Piece == null)
                 {
                     result.Add(Address.ModifyAddress(piece.Address, 0, -2));
                 }
@@ -437,19 +453,17 @@ namespace Chess
 
             foreach (string address in King(piece.Address))
             {
-                if (Board.Square[address].Piece != null || Board.Square[address].Piece.Player != piece.Player)
+                if (Board.Square[address].Piece == null || Board.Square[address].Piece.Player != piece.Player)
                 {
                     if (!IsThreat(piece.Player, address, piece.Address, address))
                     {
                         result.Add(address);
                     }
-                }
-                result.Add(address);
+                }                
             }
-
             return result;
         }
-        
+
         private static bool DiagonlaThreat(ChessPiece.Team player, string target, string from, string to)
         {
             bool diagonalBlocked = false;
@@ -886,7 +900,9 @@ namespace Chess
         {
             foreach (string address in Horse(target))
             {
-                if (Board.Square[address].Piece.Type == ChessPiece.Piece.Knight && Board.Square[address].Piece.Player != player)
+                if (Board.Square[address].Piece != null &&
+                    Board.Square[address].Piece.Type == ChessPiece.Piece.Knight &&
+                    Board.Square[address].Piece.Player != player)
                 {
                     return true;
                 }

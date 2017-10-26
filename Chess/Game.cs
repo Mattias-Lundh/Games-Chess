@@ -5,9 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Chess
-{
+{    
     class Game
     {
+        public static ChessPiece SelectedPiece { get; set; }
+        public static List<string> HighLightList
+        {
+            get
+            {
+                return Movement.GetAvaliable(SelectedPiece);
+            }
+        }
         private Board Board { get; set; }
         public Game(Board board)
         {
@@ -27,15 +35,19 @@ namespace Chess
             foreach (ChessPiece piece in ChessPiece.Set)
             {
                 Movement.Place(piece, piece.Address);
+                ChessPiece.Find.Add(piece.Graphic, piece);
             }
+
+            foreach (KeyValuePair<string, BoardSquare> key in Board.Square)
+            {
+                BoardSquare square = Board.Square[key.ToString().Substring(1, 2)];
+                if (square.Piece != null)
+                {
+                    square.Piece.Graphic.MouseDown += Events.PieceMouseDownEvent;
+                    square.Piece.Graphic.Click += Events.PieceClickEvent;
+                }                
+            }
+            
         }
-
-        //private void Place(ChessPiece piece, string address)
-        //{
-        //    Board.Square[address].Piece = piece;
-        //    Board.Square[address].Panel.Controls.Add(piece.Graphic);
-        //    piece.Address = address;
-        //}
-
     }
 }

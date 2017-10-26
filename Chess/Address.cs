@@ -88,28 +88,28 @@ namespace Chess
         {
             if (column >= 0 && row >= 0)
             {
-                if (ConvertFromChar(address[0]) + column < 8 && address[1] + row < 8)
+                if (ConvertFromChar(address[0]) + column <=8 && int.Parse(address[1].ToString()) + row <= 8)
                 {
                     return true;
                 }
             }
             else if(column >= 0 && row < 0)
             {
-                if (ConvertFromChar(address[0]) + column < 8 && address[1] + row > 0)
+                if (ConvertFromChar(address[0]) + column <= 8 && int.Parse(address[1].ToString()) + row > 0)
                 {
                     return true;
                 }
             }
             else if (column < 0 && row >= 0)
             {
-                if (ConvertFromChar(address[0]) + column > 0 && address[1] + row < 8)
+                if (ConvertFromChar(address[0]) + column > 0 && int.Parse(address[1].ToString()) + row <= 8)
                 {
                     return true;
                 }
             }
             else if (column < 0 && row < 0)
             {
-                if (ConvertFromChar(address[0]) + column > 0 && address[1] + row > 0)
+                if (ConvertFromChar(address[0]) + column > 0 && int.Parse(address[1].ToString()) + row > 0)
                 {
                     return true;
                 }
@@ -122,7 +122,7 @@ namespace Chess
         {
             if (SquareExcisits(origin, column, row))
             {
-                return "" + ConvertFromInt((ConvertFromChar(origin[0]) + column)) + (origin[1] + row);
+                return "" + ConvertFromInt((ConvertFromChar(origin[0]) + column)).ToString() + (int.Parse(origin[1].ToString()) + row);
             }
             return origin;
         }

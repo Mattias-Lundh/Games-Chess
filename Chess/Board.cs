@@ -55,25 +55,22 @@ namespace Chess
                     {
                         square.BackColor = Color.Black;
                     }
-                    Square.Add(Address.FlipRows(Address.ConvertFromInt(j) + i),
-                                new BoardSquare
-                                {
-                                    Panel = square,
-                                    Address = Address.FlipRows(Address.ConvertFromInt(j) + i),
-                                    FillColor = square.BackColor
-                                });
+                    BoardSquare boardsquare = new BoardSquare
+                    {
+                        Panel = square,
+                        Address = Address.FlipRows(Address.ConvertFromInt(j) + i),
+                        FillColor = square.BackColor
+                    };
+                    Square.Add(Address.FlipRows(Address.ConvertFromInt(j) + i), boardsquare);
+                    BoardSquare.Find.Add(square, boardsquare);
                 }
             }
 
-            //foreach (KeyValuePair<string, BoardSquare> key in Square)
-            //{
-            //    BoardSquare square = Square[key.ToString().Substring(1, 2)];
-            //    square.Piece.Graphic.MouseDown += Events.PieceMouseDownEvent;
-            //    square.Piece.Graphic.Click += Events.PieceClickEvent;
-            //    square.Panel.MouseUp += Events.SquareMouseUpEvent;
-            //}
-
-
+            foreach (KeyValuePair<string, BoardSquare> key in Square)
+            {
+                BoardSquare square = Square[key.ToString().Substring(1, 2)];                
+                square.Panel.MouseUp += Events.SquareMouseUpEvent;
+            }
         }
     }
 }
