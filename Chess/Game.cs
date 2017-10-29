@@ -9,6 +9,9 @@ namespace Chess
     class Game
     {
         public static ChessPiece SelectedPiece { get; set; }
+        public static ChessPiece.Team Player { get; set; }
+        private Board Board { get; set; }
+
         public static List<string> HighLightList
         {
             get
@@ -16,15 +19,27 @@ namespace Chess
                 return Movement.GetAvaliable(SelectedPiece);
             }
         }
-        private Board Board { get; set; }
+        
         public Game(Board board)
         {
             Board = board;
+            //Board.LayoutPanel.MouseMove += MoseMoveEvent
+            Player = ChessPiece.Team.White;
         }
 
-
+        public static void TogglePlayer()
+        {
+            if(Player == ChessPiece.Team.White)
+            {
+                Player = ChessPiece.Team.Black;
+            }
+            else
+            {
+                Player = ChessPiece.Team.White;
+            }
+        }
         public void StartGame()
-        {            
+        {        
             SetBoard();
         }
 
