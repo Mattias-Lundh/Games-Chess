@@ -68,8 +68,10 @@ namespace Chess
 
             foreach (KeyValuePair<string, BoardSquare> key in Square)
             {
-                BoardSquare square = Square[key.ToString().Substring(1, 2)];                
-                square.Panel.MouseUp += Events.SquareMouseUpEvent;
+                BoardSquare square = Square[key.ToString().Substring(1, 2)];                                       
+                square.Panel.MouseEnter += EventHandler.SquareMouseEnterEvent;
+                square.Panel.MouseHover += EventHandler.SquareMouseEnterEvent;
+                square.Panel.MouseMove += EventHandler.BoardMouseMoveEvent;
             }
         }
     }

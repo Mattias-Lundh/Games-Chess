@@ -50,8 +50,9 @@
     <Compile Include="Address.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="BoardSquare.cs" />
+    <Compile Include="Captured.cs" />
     <Compile Include="ChessPiece.cs" />
-    <Compile Include="Events.cs" />
+    <Compile Include="EventHandler.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Movement.cs" />
     <Compile Include="MyForm.cs">

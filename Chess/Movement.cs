@@ -982,5 +982,21 @@ namespace Chess
             Board.Square[address].Panel.Controls.Add(piece.Graphic);
             piece.Address = address;
         }
+        public static void Remove(string address)
+        {
+            if (Board.Square[address].Piece != null)
+            {                
+                Board.Square[address].Panel.Controls.Clear();
+                Board.Square[address].Piece = null;
+            }
+        }
+
+        public static void Action(ChessPiece piece, string toSquare)
+        {
+            Remove(toSquare);
+            Remove(Game.SelectedPiece.Address);
+            Place(Game.SelectedPiece, toSquare);
+        }
+
     }
 }
