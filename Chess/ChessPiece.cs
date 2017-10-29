@@ -14,6 +14,7 @@ namespace Chess
         public enum Piece { Pawn, Rook, Knight, Bishop, Queen, King }
 
         public static List<ChessPiece> Set { get; set; } = new List<ChessPiece> { };
+        public static Dictionary<PictureBox, ChessPiece> Find { get; set; } = new Dictionary<PictureBox, ChessPiece> { };
         private PictureBox graphic;
         public PictureBox Graphic
         {
@@ -130,7 +131,7 @@ namespace Chess
                 new ChessPiece{Player = Team.White,Type = Piece.Pawn, Address = "G2"},
                 new ChessPiece{Player = Team.White,Type = Piece.Pawn, Address = "H2"}
             });
-            foreach(ChessPiece piece in Set)
+            foreach (ChessPiece piece in Set)
             {
                 piece.Graphic = new PictureBox
                 {

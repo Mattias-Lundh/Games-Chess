@@ -10,6 +10,7 @@ namespace Chess
 {
     class BoardSquare
     {
+        public static Dictionary<Panel, BoardSquare> Find { get; set; } = new Dictionary<Panel, BoardSquare> { };       
         public Panel Panel { get; set; }
         public string Address { get; set; }
         public ChessPiece Piece { get; set; }
