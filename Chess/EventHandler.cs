@@ -12,6 +12,16 @@ namespace Chess
     {
         private static Point MouseLocation { get; set; }
         public static PictureBox MouseCursor { get; set; }
+
+        internal static void WindowSizeChangedEvent(object sender, EventArgs e)
+        {
+           foreach(Control c in Game.CapturedPieces.Controls)
+            {
+                PictureBox image = (PictureBox)c;
+                image.Size = new Size(Board.Square["A1"].Panel.Width/2, Board.Square["A1"].Panel.Height/2);
+            }
+        }
+
         private static BoardSquare TargetSquare { get; set; }
         private static Timer MouseisDown { get; set; }
         private static bool AttemptedMove { get; set; }
@@ -49,6 +59,7 @@ namespace Chess
             MouseisDown.Tick += MovingWhileLeftHold;
             MouseisDown.Disposed += UnfollowMouse;
             MouseCursor.ImageLocation = piece.Graphic.ImageLocation;
+            MouseCursor.Location = MouseLocation;
             MouseCursor.Visible = true;
             MouseCursor.Size = Board.Square[piece.Address].Panel.Size;
         }
@@ -96,8 +107,12 @@ namespace Chess
 
         internal static void PieceMouseUpEvent(object sender, MouseEventArgs e)
         {
-            MouseisDown.Dispose();
-            AttemptedMove = true;
+            if (Game.SelectedPiece.Player == Game.Player)
+            {
+                MouseisDown.Dispose();
+                AttemptedMove = true;
+            }
+            
         }
 
         private static void UnHighlightSquares()

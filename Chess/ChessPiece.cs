@@ -137,8 +137,9 @@ namespace Chess
                 {
                     Dock = DockStyle.Fill,
                     Margin = new Padding(0),
-                    SizeMode = PictureBoxSizeMode.StretchImage
-                };
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    BackColor = Color.Transparent
+            };
             }
         }
         private string address;

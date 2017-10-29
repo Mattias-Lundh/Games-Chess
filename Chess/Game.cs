@@ -27,11 +27,6 @@ namespace Chess
         {
             Board = board;
             Player = ChessPiece.Team.White;
-            CapturedPieces = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                Margin = new Padding(0)
-            };
         }
 
         public static void TogglePlayer()
@@ -48,6 +43,21 @@ namespace Chess
         public void StartGame()
         {
             SetBoard();
+        }
+
+        public static void CreateCapturedPiece(PictureBox p)
+        {
+            PictureBox image = new PictureBox
+            {
+                Size = new Size(Board.Square["A1"].Panel.Width/2, Board.Square["A1"].Panel.Height/2),
+                     
+               BackColor = Color.Transparent,
+               ImageLocation = p.ImageLocation,
+               SizeMode = PictureBoxSizeMode.StretchImage
+                
+            };
+
+            CapturedPieces.Controls.Add(image);            
         }
 
         private void SetBoard()
