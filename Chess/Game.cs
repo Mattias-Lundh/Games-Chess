@@ -23,7 +23,7 @@ namespace Chess
         public Game(Board board)
         {
             Board = board;
-            Board.LayoutPanel.MouseMove += MoseMoveEvent
+            //Board.LayoutPanel.MouseMove += MoseMoveEvent
             Player = ChessPiece.Team.White;
         }
 
