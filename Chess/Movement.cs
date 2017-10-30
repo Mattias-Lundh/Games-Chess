@@ -354,7 +354,7 @@ namespace Chess
                         result.Add(testLocation);
                     }
                 }
-                if (int.Parse(piece.Address[1].ToString()) == 2 && 
+                if (int.Parse(piece.Address[1].ToString()) == 2 &&
                     Board.Square[Address.ModifyAddress(piece.Address, 0, 1)].Piece == null &&
                     Board.Square[Address.ModifyAddress(piece.Address, 0, 1)].Piece == null)
                 {
@@ -386,7 +386,7 @@ namespace Chess
                         result.Add(testLocation);
                     }
                 }
-                if (int.Parse(piece.Address[1].ToString()) == 7 && 
+                if (int.Parse(piece.Address[1].ToString()) == 7 &&
                     Board.Square[Address.ModifyAddress(piece.Address, 0, -1)].Piece == null
                     && Board.Square[Address.ModifyAddress(piece.Address, 0, -2)].Piece == null)
                 {
@@ -406,6 +406,12 @@ namespace Chess
                     EnPassant.Contains(address))
                 {
                     if (!KingThreatened(piece, address))
+                    {
+                        result.Add(address);
+                    }
+                    else if ((EnPassant.Contains(address)) &&
+                        (piece.Player == ChessPiece.Team.White && !IsThreat(piece.Player, ChessPiece.Set[20].Address, Address.ModifyAddress(address, 0, -1), address)) ||
+                         (piece.Player == ChessPiece.Team.Black && !IsThreat(piece.Player, ChessPiece.Set[4].Address, Address.ModifyAddress(address, 0, 1), address)))
                     {
                         result.Add(address);
                     }

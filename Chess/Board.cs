@@ -20,7 +20,7 @@ namespace Chess
                 ColumnCount = 8,
                 RowCount = 8,
                 Dock = DockStyle.Fill,
-                BackColor = Color.White,                
+                BackColor = Color.White
             };
             LayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13));
             LayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13));

@@ -40,7 +40,7 @@ namespace Chess
                 }
             }
         }
-
+        
         public static void PieceClickEvent(object sender, EventArgs e)
         {
             if (Game.SelectedPiece != null && Game.SelectedPiece.Player == Game.Player) { UnHighlightSquares(); }
