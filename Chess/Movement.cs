@@ -998,6 +998,26 @@ namespace Chess
             return false;
         }
 
+        public static void CheckMateCheck()
+        {
+            if((Game.Player == ChessPiece.Team.Black && GetAvaliable(ChessPiece.Set[4]).Count == 0 ) ||
+               (Game.Player == ChessPiece.Team.White && GetAvaliable(ChessPiece.Set[20]).Count == 0))
+            {
+                foreach (ChessPiece piece in ChessPiece.Set)
+                {
+                    if(piece.Player != Game.Player)
+                    {
+                        if(piece.Address != "captured")
+                        {
+                            if(true)
+                            {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public static List<string> GetAvaliable(ChessPiece piece)
         {
             List<string> result = new List<string> { };
@@ -1072,7 +1092,7 @@ namespace Chess
                 CastleAction(piece, toSquare);
             }
             Game.TogglePlayer();
-        }
+        }        
         private static void Capture(string address)
         {
             if (Board.Square[address].Piece != null)
@@ -1148,6 +1168,7 @@ namespace Chess
                 }
             }
         }
+
     }
 }
 
