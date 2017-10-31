@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace Chess
 {
@@ -1000,22 +1003,56 @@ namespace Chess
 
         public static void CheckMateCheck()
         {
-            if((Game.Player == ChessPiece.Team.Black && GetAvaliable(ChessPiece.Set[4]).Count == 0 ) ||
+            bool checkMate = true;
+            if ((Game.Player == ChessPiece.Team.Black && GetAvaliable(ChessPiece.Set[4]).Count == 0) ||
                (Game.Player == ChessPiece.Team.White && GetAvaliable(ChessPiece.Set[20]).Count == 0))
-            {
+            {                
                 foreach (ChessPiece piece in ChessPiece.Set)
                 {
-                    if(piece.Player != Game.Player)
+                    if (piece.Address != "captured")
                     {
-                        if(piece.Address != "captured")
+                        if (piece.Player != Game.Player)
                         {
-                            if(true)
+                            if (Game.Player == ChessPiece.Team.Black)
                             {
-
+                                if (GetAvaliable(piece).Contains(ChessPiece.Set[4].Address))
+                                {
+                                    foreach (ChessPiece playersPiece in ChessPiece.Set)
+                                    {
+                                        if (Game.Player == ChessPiece.Team.Black)
+                                        {
+                                            if (GetAvaliable(playersPiece).Count != 0)
+                                            {
+                                                checkMate = false;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (GetAvaliable(piece).Contains(ChessPiece.Set[20].Address))
+                                {
+                                    foreach (ChessPiece playersPiece in ChessPiece.Set)
+                                    {
+                                        if (Game.Player == ChessPiece.Team.White)
+                                        {
+                                            if (GetAvaliable(playersPiece).Count != 0)
+                                            {
+                                                checkMate = false;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
+
                     }
                 }
+            }
+            if (checkMate)
+            {
+                MessageBox.Show("Check Mate");
             }
         }
         public static List<string> GetAvaliable(ChessPiece piece)
@@ -1092,7 +1129,7 @@ namespace Chess
                 CastleAction(piece, toSquare);
             }
             Game.TogglePlayer();
-        }        
+        }
         private static void Capture(string address)
         {
             if (Board.Square[address].Piece != null)
@@ -1104,20 +1141,24 @@ namespace Chess
         private static void CastleAction(ChessPiece piece, string toSquare)
         {
             if (toSquare == "C1")
-            {
-                Action(Board.Square["A1"].Piece, "D1");
+            {               
+                Place(Board.Square["A1"].Piece,"D1");
+                Remove("A1");
             }
             if (toSquare == "G1")
             {
-                Action(Board.Square["H1"].Piece, "F1");
+                Place(Board.Square["H1"].Piece, "F1");
+                Remove("H1");
             }
             if (toSquare == "C8")
             {
-                Action(Board.Square["A8"].Piece, "D8");
+                Place(Board.Square["A8"].Piece, "D8");
+                Remove("A8");
             }
             if (toSquare == "G8")
             {
-                Action(Board.Square["H8"].Piece, "F8");
+                Place(Board.Square["H8"].Piece, "F8");
+                Remove("H8");
             }
         }
         private static bool CastleCheck(ChessPiece piece)
@@ -1168,7 +1209,6 @@ namespace Chess
                 }
             }
         }
-
     }
 }
 
