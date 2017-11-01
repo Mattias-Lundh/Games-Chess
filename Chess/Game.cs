@@ -11,9 +11,12 @@ namespace Chess
 {
     class Game
     {
+        public static bool Pause = false;
         public static ChessPiece SelectedPiece { get; set; }
         public static ChessPiece.Team Player { get; set; }
         private Board Board { get; set; }
+        public static TableLayoutPanel MainPanel { get; set; }
+        public static TableLayoutPanel PromoteMenu { get; set; }
         public static List<string> HighLightList
         {
             get
@@ -23,10 +26,13 @@ namespace Chess
         }
         public static FlowLayoutPanel CapturedPieces { get; set; }
 
-        public Game(Board board)
+        public Game(Board board, TableLayoutPanel mainPanel)
         {
             Board = board;
+            MainPanel = mainPanel;
             Player = ChessPiece.Team.White;
+            PromoteMenu = GeneratePromoteMenu();
+            MainPanel.Controls.Add(PromoteMenu, 2, 2);
         }
 
         public static void TogglePlayer()
@@ -49,15 +55,15 @@ namespace Chess
         {
             PictureBox image = new PictureBox
             {
-                Size = new Size(Board.Square["A1"].Panel.Width/2, Board.Square["A1"].Panel.Height/2),
-                     
-               BackColor = Color.Transparent,
-               ImageLocation = p.ImageLocation,
-               SizeMode = PictureBoxSizeMode.StretchImage
-                
+                Size = new Size(Board.Square["A1"].Panel.Width / 2, Board.Square["A1"].Panel.Height / 2),
+
+                BackColor = Color.Transparent,
+                ImageLocation = p.ImageLocation,
+                SizeMode = PictureBoxSizeMode.StretchImage
+
             };
 
-            CapturedPieces.Controls.Add(image);            
+            CapturedPieces.Controls.Add(image);
         }
 
         private void SetBoard()
@@ -85,6 +91,51 @@ namespace Chess
                 }
             }
 
+        }
+
+        private static TableLayoutPanel GeneratePromoteMenu()
+        {
+            TableLayoutPanel result = new TableLayoutPanel
+            {
+                ColumnCount = 2,
+                RowCount = 2,
+                Dock = DockStyle.Fill,
+            };
+
+            result.Controls.Add(new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Name = "Rook"
+            });
+            result.Controls.Add(new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Name = "Queen"
+            });
+            result.Controls.Add(new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Name = "Knight"
+            });
+            result.Controls.Add(new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Name = "Bishop"
+            });
+            result.Visible = false;
+            foreach(Control c in result.Controls)
+            {
+                c.Click += EventHandler.PieceSelectEvent;
+            }
+            return result;
         }
     }
 }

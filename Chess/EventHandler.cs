@@ -15,10 +15,10 @@ namespace Chess
 
         internal static void WindowSizeChangedEvent(object sender, EventArgs e)
         {
-           foreach(Control c in Game.CapturedPieces.Controls)
+            foreach (Control c in Game.CapturedPieces.Controls)
             {
                 PictureBox image = (PictureBox)c;
-                image.Size = new Size(Board.Square["A1"].Panel.Width/2, Board.Square["A1"].Panel.Height/2);
+                image.Size = new Size(Board.Square["A1"].Panel.Width / 2, Board.Square["A1"].Panel.Height / 2);
             }
         }
 
@@ -28,7 +28,7 @@ namespace Chess
 
         public static void PieceMouseDownEvent(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left && !Game.Pause)
             {
                 if (Game.SelectedPiece != null && Game.SelectedPiece.Player == Game.Player) { UnHighlightSquares(); }
                 PictureBox picturebox = (PictureBox)sender;
@@ -40,15 +40,18 @@ namespace Chess
                 }
             }
         }
-        
+
         public static void PieceClickEvent(object sender, EventArgs e)
         {
-            if (Game.SelectedPiece != null && Game.SelectedPiece.Player == Game.Player) { UnHighlightSquares(); }
-            PictureBox picturebox = (PictureBox)sender;
-            Game.SelectedPiece = ChessPiece.Find[picturebox];
-            if (Game.Player == Game.SelectedPiece.Player)
+            if (!Game.Pause)
             {
-                HighlightSquares();
+                if (Game.SelectedPiece != null && Game.SelectedPiece.Player == Game.Player) { UnHighlightSquares(); }
+                PictureBox picturebox = (PictureBox)sender;
+                Game.SelectedPiece = ChessPiece.Find[picturebox];
+                if (Game.Player == Game.SelectedPiece.Player)
+                {
+                    HighlightSquares();
+                }
             }
         }
 
@@ -107,12 +110,74 @@ namespace Chess
 
         internal static void PieceMouseUpEvent(object sender, MouseEventArgs e)
         {
-            if (Game.SelectedPiece.Player == Game.Player)
+            if (!Game.Pause)
             {
-                MouseisDown.Dispose();
-                AttemptedMove = true;
+                if (Game.SelectedPiece.Player == Game.Player)
+                {
+                    MouseisDown.Dispose();
+                    AttemptedMove = true;
+                }
             }
-            
+        }
+
+        internal static void PieceSelectEvent(object sender, EventArgs e)
+        {
+            if (Game.Pause)
+            {
+                PictureBox selected = (PictureBox)sender;
+                switch (selected.Name)
+                {
+                    case "Rook":
+                        Game.SelectedPiece.Type = ChessPiece.Piece.Rook;
+                        if (Game.SelectedPiece.Player == ChessPiece.Team.Black)
+                        {
+                            Game.SelectedPiece.Graphic.ImageLocation = @"Graphics\RookBlack.png";
+                        }
+                        else
+                        {
+                            Game.SelectedPiece.Graphic.ImageLocation = @"Graphics\RookWhite.png";
+                        }
+
+                        break;
+                    case "Queen":
+                        Game.SelectedPiece.Type = ChessPiece.Piece.Queen;
+                        if (Game.SelectedPiece.Player == ChessPiece.Team.Black)
+                        {
+                            Game.SelectedPiece.Graphic.ImageLocation = @"Graphics\QueenBlack.png";
+                        }
+                        else
+                        {
+                            Game.SelectedPiece.Graphic.ImageLocation = @"Graphics\QueenWhite.png";
+                        }
+                        break;
+                    case "Knight":
+                        Game.SelectedPiece.Type = ChessPiece.Piece.Knight;
+                        if (Game.SelectedPiece.Player == ChessPiece.Team.Black)
+                        {
+                            Game.SelectedPiece.Graphic.ImageLocation = @"Graphics\KnightBlack.png";
+
+                        }
+                        else
+                        {
+                            Game.SelectedPiece.Graphic.ImageLocation = @"Graphics\KnightWhite.png";
+                        }
+                        break;
+                    case "Bishop":
+                        Game.SelectedPiece.Type = ChessPiece.Piece.Bishop;
+                        if (Game.SelectedPiece.Player == ChessPiece.Team.Black)
+                        {
+                            Game.SelectedPiece.Graphic.ImageLocation = @"Graphics\BishopBlack.png";
+
+                        }
+                        else
+                        {
+                            Game.SelectedPiece.Graphic.ImageLocation = @"Graphics\BishopWhite.png";
+                        }
+                        break;
+                }
+                Game.Pause = false;
+                Game.PromoteMenu.Visible = false;
+            }
         }
 
         private static void UnHighlightSquares()
@@ -148,7 +213,7 @@ namespace Chess
             foreach (string address in Movement.GetAvaliable(Game.SelectedPiece))
             {
                 if (TargetSquare.Address == address)
-                {                    
+                {
                     Movement.Action(Game.SelectedPiece, TargetSquare.Address);
                 }
             }

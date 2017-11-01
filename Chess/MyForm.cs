@@ -46,7 +46,7 @@ namespace Chess
                 Margin = new Padding(0)
             };            
             panel.Controls.Add(capturedPieces);
-            Game game1 = new Game(board);
+            Game game1 = new Game(board,panel);
             Game.CapturedPieces = capturedPieces;
             game1.StartGame();
             SizeChanged += EventHandler.WindowSizeChangedEvent;

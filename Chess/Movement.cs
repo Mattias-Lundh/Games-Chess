@@ -1000,61 +1000,83 @@ namespace Chess
             }
             return false;
         }
-
-        public static void CheckMateCheck()
+        private static List<string> AllMoves(ChessPiece.Team player)
         {
-            bool checkMate = true;
-            if ((Game.Player == ChessPiece.Team.Black && GetAvaliable(ChessPiece.Set[4]).Count == 0) ||
-               (Game.Player == ChessPiece.Team.White && GetAvaliable(ChessPiece.Set[20]).Count == 0))
-            {                
+            List<string> result = new List<string> { };
+
+            if (player == ChessPiece.Team.Black)
+            {
                 foreach (ChessPiece piece in ChessPiece.Set)
                 {
                     if (piece.Address != "captured")
                     {
-                        if (piece.Player != Game.Player)
+                        if (piece.Player == ChessPiece.Team.Black)
                         {
-                            if (Game.Player == ChessPiece.Team.Black)
+                            foreach (string address in GetAvaliable(piece))
                             {
-                                if (GetAvaliable(piece).Contains(ChessPiece.Set[4].Address))
-                                {
-                                    foreach (ChessPiece playersPiece in ChessPiece.Set)
-                                    {
-                                        if (Game.Player == ChessPiece.Team.Black)
-                                        {
-                                            if (GetAvaliable(playersPiece).Count != 0)
-                                            {
-                                                checkMate = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (GetAvaliable(piece).Contains(ChessPiece.Set[20].Address))
-                                {
-                                    foreach (ChessPiece playersPiece in ChessPiece.Set)
-                                    {
-                                        if (Game.Player == ChessPiece.Team.White)
-                                        {
-                                            if (GetAvaliable(playersPiece).Count != 0)
-                                            {
-                                                checkMate = false;
-                                            }
-                                        }
-                                    }
-                                }
+                                result.Add(address);
                             }
                         }
-
                     }
                 }
             }
+            else
+            {
+                foreach (ChessPiece piece in ChessPiece.Set)
+                {
+                    if (piece.Address != "captured")
+                    {
+                        if (piece.Player == ChessPiece.Team.White)
+                        {
+                            foreach (string address in GetAvaliable(piece))
+                            {
+                                result.Add(address);
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+        private static void CheckMateCheck()
+        {
+            bool checkMate = false;
+
+            if (Game.Player == ChessPiece.Team.Black)
+            {
+                if (KingThreatened(ChessPiece.Set[4], ChessPiece.Set[4].Address))
+                {
+                    if (AllMoves(ChessPiece.Team.Black).Count == 0)
+                    {
+                        checkMate = true;
+                    }
+                }
+            }
+            else
+            {
+                if (KingThreatened(ChessPiece.Set[20], ChessPiece.Set[20].Address))
+                {
+                    if (AllMoves(ChessPiece.Team.White).Count == 0)
+                    {
+                        checkMate = true;
+                    }
+                }
+            }
+
             if (checkMate)
             {
-                MessageBox.Show("Check Mate");
+                if (Game.Player == ChessPiece.Team.Black)
+                {
+                    MessageBox.Show("Check Mate" + "\r\n" + "White is the Winner");
+                }
+                else
+                {
+                    MessageBox.Show("Check Mate" + "\r\n" + "Black is the Winner");
+                }
+
             }
         }
+
         public static List<string> GetAvaliable(ChessPiece piece)
         {
             List<string> result = new List<string> { };
@@ -1124,12 +1146,46 @@ namespace Chess
             Remove(toSquare);
             Remove(Game.SelectedPiece.Address);
             Place(Game.SelectedPiece, toSquare);
+            PromotionCheck(toSquare);
             if (CastleCheck(piece))
             {
                 CastleAction(piece, toSquare);
             }
             Game.TogglePlayer();
+            CheckMateCheck();
         }
+        private static void PromotionCheck(string address)
+        {
+            if (Game.SelectedPiece.Type == ChessPiece.Piece.Pawn &&
+                (int.Parse(address[1].ToString()) == 8 || int.Parse(address[1].ToString()) == 1))
+            {
+                PromotionChoice();
+            }
+        }
+        private static void PromotionChoice()
+        {
+            Game.Pause = true;            
+            PictureBox pb1 = (PictureBox)Game.PromoteMenu.Controls[0];
+            PictureBox pb2 = (PictureBox)Game.PromoteMenu.Controls[1];
+            PictureBox pb3 = (PictureBox)Game.PromoteMenu.Controls[2];
+            PictureBox pb4 = (PictureBox)Game.PromoteMenu.Controls[3];
+            if (Game.SelectedPiece.Player == ChessPiece.Team.Black)
+            {                
+                pb1.ImageLocation = @"Graphics\RookBlack.png";
+                pb2.ImageLocation = @"Graphics\QueenBlack.png";
+                pb3.ImageLocation = @"Graphics\KnightBlack.png";
+                pb4.ImageLocation = @"Graphics\BishopBlack.png";
+            }
+            else
+            {
+                pb1.ImageLocation = @"Graphics\RookWhite.png";
+                pb2.ImageLocation = @"Graphics\QueenWhite.png";
+                pb3.ImageLocation = @"Graphics\KnightWhite.png";
+                pb4.ImageLocation = @"Graphics\BishopWhite.png";
+            }
+            Game.PromoteMenu.Visible = true;
+        }
+
         private static void Capture(string address)
         {
             if (Board.Square[address].Piece != null)
@@ -1141,8 +1197,8 @@ namespace Chess
         private static void CastleAction(ChessPiece piece, string toSquare)
         {
             if (toSquare == "C1")
-            {               
-                Place(Board.Square["A1"].Piece,"D1");
+            {
+                Place(Board.Square["A1"].Piece, "D1");
                 Remove("A1");
             }
             if (toSquare == "G1")
@@ -1211,4 +1267,3 @@ namespace Chess
         }
     }
 }
-
