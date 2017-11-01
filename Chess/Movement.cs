@@ -1142,6 +1142,7 @@ namespace Chess
         public static void Action(ChessPiece piece, string toSquare)
         {
             EnPassantSettings(piece, toSquare);
+            DisableCasteling(piece);
             Capture(toSquare);
             Remove(toSquare);
             Remove(Game.SelectedPiece.Address);
@@ -1154,6 +1155,39 @@ namespace Chess
             Game.TogglePlayer();
             CheckMateCheck();
         }
+
+        private static void DisableCasteling(ChessPiece piece)
+        {
+            // bool[] Castle
+            // [0] Queenside white
+            // [1] Kingside White
+            // [2] Queenside Black
+            // [3] Kingside black
+            switch (piece.Address)
+            {
+                case "A1":
+                    Castle[0] = false;
+                    break;
+                case "E1":
+                    Castle[0] = false;
+                    Castle[1] = false;
+                    break;
+                case "H1":
+                    Castle[1] = false;
+                    break;
+                case "A8":
+                    Castle[2] = false;
+                    break;
+                case "E8":
+                    Castle[2] = false;
+                    Castle[3] = false;
+                    break;
+                case "H8":
+                    Castle[3] = false;
+                    break;
+            }
+        }
+
         private static void PromotionCheck(string address)
         {
             if (Game.SelectedPiece.Type == ChessPiece.Piece.Pawn &&

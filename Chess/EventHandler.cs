@@ -10,8 +10,12 @@ namespace Chess
 {
     class EventHandler
     {
-        private static Point MouseLocation { get; set; }
         public static PictureBox MouseCursor { get; set; }
+        private static Point MouseLocation { get; set; }
+        private static BoardSquare TargetSquare { get; set; }
+        private static Timer MouseisDown { get; set; }
+        private static bool AttemptedMove { get; set; }
+        private static Timer SloppyBugFix { get; set; }
 
         internal static void WindowSizeChangedEvent(object sender, EventArgs e)
         {
@@ -21,10 +25,6 @@ namespace Chess
                 image.Size = new Size(Board.Square["A1"].Panel.Width / 2, Board.Square["A1"].Panel.Height / 2);
             }
         }
-
-        private static BoardSquare TargetSquare { get; set; }
-        private static Timer MouseisDown { get; set; }
-        private static bool AttemptedMove { get; set; }
 
         public static void PieceMouseDownEvent(object sender, MouseEventArgs e)
         {
@@ -107,7 +107,6 @@ namespace Chess
             Board.Square[Game.SelectedPiece.Address].Panel.BackColor = Color.ForestGreen;
 
         }
-
         internal static void PieceMouseUpEvent(object sender, MouseEventArgs e)
         {
             if (!Game.Pause)
@@ -116,8 +115,18 @@ namespace Chess
                 {
                     MouseisDown.Dispose();
                     AttemptedMove = true;
+                    SloppyBugFix = new Timer();
+                    SloppyBugFix.Tick += Fix;
+                    SloppyBugFix.Interval = 5;
+                    SloppyBugFix.Start();
                 }
             }
+        }
+
+        private static void Fix(object sender, EventArgs e)
+        {
+            AttemptedMove = false;
+            SloppyBugFix.Dispose();
         }
 
         internal static void PieceSelectEvent(object sender, EventArgs e)
@@ -188,7 +197,6 @@ namespace Chess
             }
             Board.Square[Game.SelectedPiece.Address].Panel.BackColor = Board.Square[Game.SelectedPiece.Address].FillColor;
         }
-
         internal static void SquareMouseEnterEvent(object sender, EventArgs e)
         {
             if (sender.GetType().ToString() == "System.Windows.Forms.Panel")
@@ -203,11 +211,10 @@ namespace Chess
             }
             if (AttemptedMove)
             {
-                Move();
                 AttemptedMove = false;
+                Move();
             }
         }
-
         private static void Move()
         {
             foreach (string address in Movement.GetAvaliable(Game.SelectedPiece))

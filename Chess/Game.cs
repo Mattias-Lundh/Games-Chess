@@ -87,7 +87,6 @@ namespace Chess
                     square.Piece.Graphic.MouseUp += EventHandler.PieceMouseUpEvent;
                     square.Piece.Graphic.MouseMove += EventHandler.BoardMouseMoveEvent;
                     square.Piece.Graphic.MouseHover += EventHandler.SquareMouseEnterEvent;
-
                 }
             }
 
