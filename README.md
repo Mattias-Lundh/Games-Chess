@@ -1,3 +1,4 @@
 # Games-Chess
 A chess engine
-A work in progress...
+First working version now complete
+I cant find anymore obvious buggs
