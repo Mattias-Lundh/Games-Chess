@@ -536,7 +536,7 @@ namespace Chess
             }
             return result;
         }
-        private static bool DiagonlaThreat(ChessPiece.Team player, string target, string from, string to)
+        private static bool DiagonalThreat(ChessPiece.Team player, string target, string from, string to)
         {
             bool diagonalBlocked = false;
             foreach (string address in DiagonalNE(target))
@@ -747,6 +747,144 @@ namespace Chess
                             }
                         }
                     }
+                    diagonalBlocked = true;
+                }
+            }
+            return false;
+        }
+        private static bool DiagonalThreat(ChessPiece.Team player, string target)
+        {
+            bool diagonalBlocked = false;
+            foreach (string address in DiagonalNE(target))
+            {
+                if (!diagonalBlocked && Board.Square[address].Piece != null)
+                {
+                    if (Board.Square[address].Piece.Player != player)
+                    {
+                        if (address == DiagonalNE(target)[0])
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Bishop ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.King ||
+                                (player == ChessPiece.Team.White && Board.Square[address].Piece.Type == ChessPiece.Piece.Pawn))
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Bishop ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen)
+                            {
+                                return true;
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    diagonalBlocked = true;
+                }
+            }
+
+            diagonalBlocked = false;
+            foreach (string address in DiagonalNW(target))
+            {
+                if (!diagonalBlocked && Board.Square[address].Piece != null)
+                {
+                    if (Board.Square[address].Piece.Player != player)
+                    {
+                        if (address == DiagonalNW(target)[0])
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Bishop ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.King ||
+                                (player == ChessPiece.Team.White && Board.Square[address].Piece.Type == ChessPiece.Piece.Pawn))
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Bishop ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen)
+                            {
+                                return true;
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    diagonalBlocked = true;
+                }
+            }
+            diagonalBlocked = false;
+            foreach (string address in DiagonalSE(target))
+            {
+                if (!diagonalBlocked && Board.Square[address].Piece != null)
+                {
+                    if (Board.Square[address].Piece.Player != player)
+                    {
+                        if (address == DiagonalSE(target)[0])
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Bishop ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.King ||
+                                (player == ChessPiece.Team.White && Board.Square[address].Piece.Type == ChessPiece.Piece.Pawn))
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Bishop ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen)
+                            {
+                                return true;
+                            }
+                        }
+
+                    }
+                }
+
+                else
+                {
+                    diagonalBlocked = true;
+                }
+            }
+            diagonalBlocked = false;
+            foreach (string address in DiagonalSW(target))
+            {
+                if (!diagonalBlocked && Board.Square[address].Piece != null)
+                {
+                    if (Board.Square[address].Piece.Player != player)
+                    {
+                        if (address == DiagonalSW(target)[0])
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Bishop ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.King ||
+                                (player == ChessPiece.Team.White && Board.Square[address].Piece.Type == ChessPiece.Piece.Pawn))
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Bishop ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
                     diagonalBlocked = true;
                 }
             }
@@ -968,7 +1106,140 @@ namespace Chess
             straigthBlocked = false;
             return false;
         }
+        private static bool StraightThreat(ChessPiece.Team player, string target)
+        {
+            bool straigthBlocked = false;
+            foreach (string address in StraightN(target))
+            {
+                if (!straigthBlocked && Board.Square[address].Piece != null)
+                {
+                    if (player != Board.Square[address].Piece.Player)
+                    {
+                        if (address == StraightN(target)[0])
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Rook ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.King)
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Rook ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    straigthBlocked = true;
+                }
+            }
+            straigthBlocked = false;
+            foreach (string address in StraightW(target))
+            {
+                if (!straigthBlocked && Board.Square[address].Piece != null)
+                {
+                    if (player != Board.Square[address].Piece.Player)
+                    {
+                        if (address == StraightN(target)[0])
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Rook ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.King)
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Rook ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    straigthBlocked = true;
+                }
+            }
+            straigthBlocked = false;
+            foreach (string address in StraightS(target))
+            {
+                if (!straigthBlocked && Board.Square[address].Piece != null)
+                {
+                    if (player != Board.Square[address].Piece.Player)
+                    {
+                        if (address == StraightN(target)[0])
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Rook ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.King)
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Rook ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    straigthBlocked = true;
+                }
+            }
+            straigthBlocked = false;
+            foreach (string address in StraightE(target))
+            {
+                if (!straigthBlocked && Board.Square[address].Piece != null)
+                {
+                    if (player != Board.Square[address].Piece.Player)
+                    {
+                        if (address == StraightN(target)[0])
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Rook ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.King)
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if (Board.Square[address].Piece.Type == ChessPiece.Piece.Rook ||
+                                Board.Square[address].Piece.Type == ChessPiece.Piece.Queen)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                    straigthBlocked = true;
+                }
+            }
+            return false;
+        }
         private static bool HorseThreat(ChessPiece.Team player, string target, string from, string to)
+        {
+            foreach (string address in Horse(target))
+            {
+                if (from != address)
+                {
+                    if ((Board.Square[address].Piece != null &&
+                        Board.Square[address].Piece.Type == ChessPiece.Piece.Knight &&
+                        Board.Square[address].Piece.Player != player) ||
+                        to == address && Board.Square[from].Piece.Type == ChessPiece.Piece.Knight)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private static bool HorseThreat(ChessPiece.Team player, string target)
         {
             foreach (string address in Horse(target))
             {
@@ -983,9 +1254,19 @@ namespace Chess
         }
         private static bool IsThreat(ChessPiece.Team player, string target, string from, string to)
         {
-            if (DiagonlaThreat(player, target, from, to) ||
+            if (DiagonalThreat(player, target, from, to) ||
                 StraightThreat(player, target, from, to) ||
                 HorseThreat(player, target, from, to))
+            {
+                return true;
+            }
+            return false;
+        }
+        private static bool IsThreat(ChessPiece.Team player, string target)
+        {
+            if (DiagonalThreat(player, target) ||
+                StraightThreat(player, target) ||
+                HorseThreat(player, target))
             {
                 return true;
             }
@@ -1044,7 +1325,7 @@ namespace Chess
 
             if (Game.Player == ChessPiece.Team.Black)
             {
-                if (KingThreatened(ChessPiece.Set[4], ChessPiece.Set[4].Address))
+                if (IsThreat(ChessPiece.Set[4].Player, ChessPiece.Set[4].Address))
                 {
                     if (AllMoves(ChessPiece.Team.Black).Count == 0)
                     {
@@ -1054,7 +1335,7 @@ namespace Chess
             }
             else
             {
-                if (KingThreatened(ChessPiece.Set[20], ChessPiece.Set[20].Address))
+                if (IsThreat(ChessPiece.Set[20].Player, ChessPiece.Set[20].Address))
                 {
                     if (AllMoves(ChessPiece.Team.White).Count == 0)
                     {
@@ -1187,7 +1468,6 @@ namespace Chess
                     break;
             }
         }
-
         private static void PromotionCheck(string address)
         {
             if (Game.SelectedPiece.Type == ChessPiece.Piece.Pawn &&
@@ -1198,13 +1478,13 @@ namespace Chess
         }
         private static void PromotionChoice()
         {
-            Game.Pause = true;            
+            Game.Pause = true;
             PictureBox pb1 = (PictureBox)Game.PromoteMenu.Controls[0];
             PictureBox pb2 = (PictureBox)Game.PromoteMenu.Controls[1];
             PictureBox pb3 = (PictureBox)Game.PromoteMenu.Controls[2];
             PictureBox pb4 = (PictureBox)Game.PromoteMenu.Controls[3];
             if (Game.SelectedPiece.Player == ChessPiece.Team.Black)
-            {                
+            {
                 pb1.ImageLocation = @"Graphics\RookBlack.png";
                 pb2.ImageLocation = @"Graphics\QueenBlack.png";
                 pb3.ImageLocation = @"Graphics\KnightBlack.png";
@@ -1219,7 +1499,6 @@ namespace Chess
             }
             Game.PromoteMenu.Visible = true;
         }
-
         private static void Capture(string address)
         {
             if (Board.Square[address].Piece != null)
